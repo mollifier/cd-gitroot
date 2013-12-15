@@ -1,0 +1,50 @@
+#compdef cd-gitroot
+# ------------------------------------------------------------------------------
+# Copyright (c) 2013 Hideaki Miyake
+# Licensed under the MIT License (MIT)
+# ------------------------------------------------------------------------------
+# Description
+# -----------
+#
+#  Completion script for cd-gitroot (https://github.com/mollifier/cd-gitroot)
+#
+# ------------------------------------------------------------------------------
+# Authors
+# -------
+#
+#  * Hideaki Miyake (https://github.com/mollifier)
+#
+# ------------------------------------------------------------------------------
+
+declare -a opts args
+args=(
+  '-h[display this help and exit]'
+  '1:path:_cd-gitroot_path'
+)
+local curcontext=$curcontext state line ret=1
+declare -A opt_args
+
+# show directories in git top level directory
+(( $+functions[_cd-gitroot_path] )) ||
+_cd-gitroot_path() {
+  if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) != 'true' ]]; then
+    return 1
+  fi
+
+  local root_path=$(git rev-parse --show-toplevel)
+  _path_files -W "$root_path" -/
+}
+
+_arguments -C $opts \
+  $args && ret=0
+
+return $ret
+
+# Local Variables:
+# mode: Shell-Script
+# sh-indentation: 2
+# indent-tabs-mode: nil
+# sh-basic-offset: 2
+# End:
+# vim: ft=zsh sw=2 ts=2 et
+

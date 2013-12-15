@@ -1,0 +1,74 @@
+# cd-gitroot - zsh plugin to cd to git repository root directory
+#
+# Copyright (c) 2013 Hideaki Miyake
+# Licensed under the MIT License (MIT)
+#
+# Author : Hideaki Miyake (https://github.com/mollifier)
+# URL : https://github.com/mollifier/cd-gitroot
+#
+# How to set up
+#   Put cd-gitroot and _cd-gitroot files somewhere in your $fpath
+#   and add this line to your .zshrc:
+#
+#     autoload -Uz cd-gitroot
+#
+# Usage:
+#   cd-gitroot [PATH]
+#
+
+function cdgitroot_print_usage()
+{
+    cat << EOF
+Usage: cd-gitroot [PATH]
+Change directory to current git repository root directory.
+If PATH is specified, change directory to PATH instead of it.
+PATH is treated relative path in git root directory.
+
+  -h           display this help and exit
+EOF
+}
+
+function cdgitroot_print_error()
+{
+    echo "cd-gitroot: $@" 1>&2
+    echo "Try \`-h' option for more information." 1>&2
+}
+
+function cdgitroot() {
+
+  while getopts ':h' option; do
+    case $option in
+      h)
+        cdgitroot_print_usage
+        return 0
+        ;;
+      :)
+        cdgitroot_print_error "option requires an argument -- $OPTARG"
+        return 1
+        ;;
+      *)
+        cdgitroot_print_error "invalid option -- $OPTARG"
+        return 1
+        ;;
+    esac
+  done
+  shift $(expr $OPTIND - 1)
+
+  if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) != 'true' ]]; then
+    cdgitroot_print_error "Not in a git repository"
+    return 1
+  fi
+
+  local relative_path="$1"
+  local root_path=$(git rev-parse --show-toplevel)
+
+  if [ -n "$relative_path" ]; then
+    cd "$root_path/$relative_path"
+  else
+    cd "$root_path"
+  fi
+}
+
+cdgitroot "$@"
+
+# vim:set ft=zsh:
