@@ -36,6 +36,7 @@ function cdgitroot_print_error()
 
 function cdgitroot() {
 
+  local option OPTARG OPTIND
   while getopts ':h' option; do
     case $option in
       h)
