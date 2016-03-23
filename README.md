@@ -38,6 +38,13 @@ If you use [Antigen](https://github.com/zsh-users/antigen), add the following li
 antigen bundle mollifier/cd-gitroot
 ```
 
+### Installing using Zgen
+If you use [zgen](https://github.com/tarjoilija/zgen), add the following to your `.zshrc`
+```
+zgen load mollifier/cd-gitroot
+```
+to your `.zshrc` with your other `zgen load` commands.
+
 You can set alias to this function.
 e.g.
 
