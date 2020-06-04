@@ -37,7 +37,20 @@ If you use [Antigen](https://github.com/zsh-users/antigen), add the following li
 ```
 antigen bundle mollifier/cd-gitroot
 ```
+### Using Oh-my-zsh:
+If you use [Oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh):
 
+1. Clone this repository in oh-my-zsh's plugins directory:
+
+        git clone https://github.com/mollifier/cd-gitroot.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/cd-gitroot
+you
+2. Activate the plugin in `~/.zshrc`:
+
+        plugins=( [plugins...] cd-gitroot)
+
+3. Source `~/.zshrc`  to take changes into account:
+
+        source ~/.zshrc
 ### Installing using Zgen
 If you use [zgen](https://github.com/tarjoilija/zgen), add the following to your `.zshrc`
 ```
