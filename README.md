@@ -65,6 +65,16 @@ e.g.
 alias cdu='cd-gitroot'
 ```
 
+### Installing using [Zinit](https://github.com/zdharma/zinit
+
+Add to `.zshrc`
+
+```
+zinit load mollifier/cd-gitroot
+# or
+zinit light mollifier/cd-gitroot # Faster loading without tracking and reporting
+```
+
 ## Usage
 
 ```
